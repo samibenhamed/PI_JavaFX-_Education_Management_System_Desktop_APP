@@ -28,6 +28,13 @@ public class Student extends User {
         super( firstName, lastName, email, password, birthdate, address, phone, nationalId, type);
         this.studentClass = studentClass;
     }
+    public Student() {
+        super();
+    }
+    public Student(User user ) {
+        super(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getBirthdate(), user.getAddress(), user.getPhone(), user.getNationalId(), user.getType());
+        this.studentClass = studentClass;
+    }
 
     // toString
     @Override

@@ -23,6 +23,12 @@ public class Teacher extends  User {
         super(firstName, lastName, email, password, birthdate, address, phone, nationalId, type);
         this.specialty = specialty;
     }
+    public Teacher() {
+        super();
+    }
+    public  Teacher(User user) {
+        super(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getBirthdate(), user.getAddress(), user.getPhone(), user.getNationalId(), user.getType());
+    }
 
 
 //    toString

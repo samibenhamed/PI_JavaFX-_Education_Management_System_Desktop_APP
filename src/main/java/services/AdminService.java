@@ -1,5 +1,6 @@
 package services;
 
+import entities.Admin;
 import entities.Student;
 import entities.Teacher;
 import entities.User;
@@ -44,8 +45,11 @@ public class AdminService {
             else if(user instanceof Student){
                 Student student = (Student) user ;
                 stmt.setString(10, null);
+                if(student.getStudentClass() != null){
+//                    stmt.setInt(11, student.getStudentClass().getId());
+                }
                 stmt.setString(11, null);
-            }else {
+            }else if(user instanceof Admin ) {
                 stmt.setString(10, null);
                 stmt.setString(11, null);
             }

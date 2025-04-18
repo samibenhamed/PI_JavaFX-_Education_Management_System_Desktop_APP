@@ -112,7 +112,6 @@ public class User {
         this.type = type;
     }
     public User( String firstName, String lastName, String email, String password, LocalDate birthdate, String address, String phone, String nationalId, UserType type) {
-        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -122,6 +121,10 @@ public class User {
         this.phone = phone;
         this.nationalId = nationalId;
         this.type = type;
+    }
+
+    public User(){
+
     }
 
 
