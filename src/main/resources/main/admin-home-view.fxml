@@ -12,6 +12,7 @@
       <VBox prefHeight="400.0" prefWidth="100.0" spacing="2.0" style="-fx-background-color: grey;">
          <children>
             <Button mnemonicParsing="false" onAction="#onAddUserClick" prefHeight="25.0" prefWidth="104.0" text="ADD User" />
+            <Button mnemonicParsing="false" onAction="#onSubjectsClick" prefHeight="25.0" prefWidth="104.0" text="Subjects" />
          </children>
          <padding>
             <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />

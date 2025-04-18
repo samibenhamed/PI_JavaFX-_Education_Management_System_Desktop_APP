@@ -34,10 +34,8 @@ public class AdminController {
     @FXML
     private Label specialtyLabel , classLabel ;
 
-     // Student Specifics
-     // Teacher Specifics
 
-    // usefull functions
+    // util functions
     private void switchScene(ActionEvent event, String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource(fxmlPath));
@@ -49,6 +47,21 @@ public class AdminController {
             e.printStackTrace();
         }
     }
+    private void showErrorAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+    private void showSuccessAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
 
     @FXML
     public void initialize() {
@@ -65,6 +78,9 @@ public class AdminController {
     }
     public void onHomeClick(ActionEvent event) {
         switchScene(event, "/main/admin-home-view.fxml");
+    }
+    public void onSubjectsClick(ActionEvent event ){
+        switchScene(event, "/main/admin_views/matiere_view.fxml");
     }
     @FXML
     private void onSelectedUserType(ActionEvent event){
@@ -145,11 +161,8 @@ public class AdminController {
         }
 
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("User Added");
-        alert.setHeaderText(null);
-        alert.setContentText("The user has been successfully added!");
-        alert.showAndWait();
+
+        showSuccessAlert("User Added", "The user has been successfully added!") ;
     }
 
 
