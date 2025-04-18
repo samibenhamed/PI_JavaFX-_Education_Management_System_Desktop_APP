@@ -1,12 +1,9 @@
 package services;
 
 import entities.User;
-import org.mindrot.jbcrypt.BCrypt;
-import org.mindrot.jbcrypt.BCrypt;
 import utils.DataBase;
 import utils.HashUtil;
 
-import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

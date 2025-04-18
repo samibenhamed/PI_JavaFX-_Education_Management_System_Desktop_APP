@@ -1,28 +1,25 @@
-package tn.esprit.Conroller;
-
-import tn.esprit.entities.Matiere;
+package controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
-public class MatiereController {
+import entities.Subject;
+public class SubjectController {
+    @FXML
+    private TableView<Subject> tableMatiere;
 
     @FXML
-    private TableView<Matiere> tableMatiere;
+    private TableColumn<Subject, Integer> colId;
 
     @FXML
-    private TableColumn<Matiere, Integer> colId;
+    private TableColumn<Subject, String> colNom;
 
     @FXML
-    private TableColumn<Matiere, String> colNom;
+    private TableColumn<Subject, Integer> colCoef;
 
     @FXML
-    private TableColumn<Matiere, Integer> colCoef;
-
-    @FXML
-    private TableColumn<Matiere, Integer> colHeures;
+    private TableColumn<Subject, Integer> colHeures;
 
     @FXML
     private TextField txtNom;
@@ -33,7 +30,7 @@ public class MatiereController {
     @FXML
     private TextField txtHeures;
 
-    private ObservableList<Matiere> listeMatieres = FXCollections.observableArrayList();
+    private ObservableList<Subject> listeMatieres = FXCollections.observableArrayList();
 
     private int idCounter = 1;
 
@@ -63,7 +60,7 @@ public class MatiereController {
             int nbHeures = Integer.parseInt(heuresText);
             if (coef <= 0 || nbHeures <= 0) throw new NumberFormatException();
 
-            Matiere m = new Matiere(idCounter++, nom, coef, nbHeures);
+            Subject m = new Subject(idCounter++, nom, coef, nbHeures);
             listeMatieres.add(m);
             reinitialiser();
         } catch (NumberFormatException e) {
@@ -73,7 +70,7 @@ public class MatiereController {
 
     @FXML
     private void modifierMatiere() {
-        Matiere selected = tableMatiere.getSelectionModel().getSelectedItem();
+        Subject selected = tableMatiere.getSelectionModel().getSelectedItem();
         if (selected != null) {
             String nom = txtNom.getText().trim();
             String coefText = txtCoef.getText().trim();
@@ -104,7 +101,7 @@ public class MatiereController {
 
     @FXML
     private void supprimerMatiere() {
-        Matiere selected = tableMatiere.getSelectionModel().getSelectedItem();
+        Subject selected = tableMatiere.getSelectionModel().getSelectedItem();
         if (selected != null) {
             listeMatieres.remove(selected);
             reinitialiser();
