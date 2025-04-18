@@ -6,9 +6,7 @@ import entities.Teacher;
 import entities.User;
 import utils.DataBase;
 
-import java.security.MessageDigest;
 import java.sql.*;
-import org.mindrot.jbcrypt.BCrypt;
 import utils.HashUtil;
 
 public class AdminService {
