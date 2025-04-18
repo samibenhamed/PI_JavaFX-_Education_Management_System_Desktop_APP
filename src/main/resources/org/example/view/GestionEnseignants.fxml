@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.controller.MainViewController">
+    <VBox spacing="10">
+        <padding>
+            <Insets top="15" right="15" bottom="15" left="15"/>
+        </padding>
+
+        <!-- Titre -->
+        <Label text="Gestion des Enseignants" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+        <!-- Champs de saisie -->
+        <HBox spacing="10">
+            <TextField fx:id="nomField" promptText="Nom" />
+            <TextField fx:id="prenomField" promptText="Prénom" />
+            <TextField fx:id="emailField" promptText="Email" />
+            <TextField fx:id="departementField" promptText="Département" />
+        </HBox>
+
+        <!-- Bouton Ajouter -->
+        <HBox alignment="CENTER_RIGHT">
+            <Button text="Ajouter" onAction="#ajouterEnseignant" />
+        </HBox>
+
+        <!-- TableView -->
+        <TableView fx:id="tableEnseignants" prefHeight="300">
+            <columns>
+                <TableColumn fx:id="nomCol" text="Nom" prefWidth="100" />
+                <TableColumn fx:id="prenomCol" text="Prénom" prefWidth="100" />
+                <TableColumn fx:id="emailCol" text="Email" prefWidth="150" />
+                <TableColumn fx:id="departementCol" text="Département" prefWidth="120" />
+            </columns>
+        </TableView>
+
+    </VBox>
+</AnchorPane>
