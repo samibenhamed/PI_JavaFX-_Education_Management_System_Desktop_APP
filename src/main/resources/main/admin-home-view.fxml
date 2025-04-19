@@ -13,6 +13,7 @@
          <children>
             <Button mnemonicParsing="false" onAction="#onAddUserClick" prefHeight="25.0" prefWidth="104.0" text="ADD User" />
             <Button mnemonicParsing="false" onAction="#onSubjectsClick" prefHeight="25.0" prefWidth="104.0" text="Subjects" />
+            <Button mnemonicParsing="false" onAction="#OnUsersClick" prefHeight="25.0" prefWidth="104.0" text="Users" />
          </children>
          <padding>
             <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />

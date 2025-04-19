@@ -1,5 +1,6 @@
 package entities;
 
+import enums.Gender;
 import enums.UserType;
 
 import java.time.LocalDate;
@@ -14,20 +15,20 @@ public class Teacher extends  User {
         this.specialty = specialty;
     }
     // constructors
-    public Teacher(int id, String firstName, String lastName, String email, String password, LocalDate birthdate, String address, String phone, String nationalId, UserType type, String specialty) {
-        super(id, firstName, lastName, email, password, birthdate, address, phone, nationalId, type);
+    public Teacher(int id, String firstName, String lastName, String email, String password, LocalDate birthdate, String address, String phone, String nationalId, UserType type, String specialty , Gender gender ) {
+        super(id, firstName, lastName, email, password, birthdate, address, phone, nationalId, type , gender );
         this.specialty = specialty;
     }
 
-    public Teacher(String firstName, String lastName, String email, String password, LocalDate birthdate, String address, String phone, String nationalId, UserType type, String specialty) {
-        super(firstName, lastName, email, password, birthdate, address, phone, nationalId, type);
+    public Teacher(String firstName, String lastName, String email, String password, LocalDate birthdate, String address, String phone, String nationalId, UserType type, String specialty , Gender gender) {
+        super(firstName, lastName, email, password, birthdate, address, phone, nationalId, type , gender );
         this.specialty = specialty;
     }
     public Teacher() {
         super();
     }
     public  Teacher(User user) {
-        super(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getBirthdate(), user.getAddress(), user.getPhone(), user.getNationalId(), user.getType());
+        super(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getBirthdate(), user.getAddress(), user.getPhone(), user.getNationalId(), user.getType() , user.getGender());
     }
 
 

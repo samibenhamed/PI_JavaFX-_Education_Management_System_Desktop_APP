@@ -1,12 +1,14 @@
 package services;
 
 import entities.User;
+import enums.Gender;
 import utils.DataBase;
 import utils.HashUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 public class UserService {
@@ -34,8 +36,10 @@ public class UserService {
                         rs.getString("address"),
                         rs.getString("phone"),
                         rs.getString("national_id"),
-                        enums.UserType.valueOf(rs.getString("type"))
+                        enums.UserType.valueOf(rs.getString("type")),
+                        enums.Gender.valueOf(rs.getString("gender"))
                 );
+
                 return user;
             } else {
                 System.out.println("Authentication failed.");
@@ -47,4 +51,40 @@ public class UserService {
             return null;
         }
     }
+
+    public boolean isEmailUnique(String email) {
+        try {
+            String SQL = "SELECT COUNT(*) FROM users WHERE email = ?";
+            Connection conn = DataBase.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(SQL)  ;
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) == 0; // true if count == 0 → email is unique
+            }
+        } catch (SQLException e) {
+            System.err.println("Error checking email uniqueness: " + e.getMessage());
+        }
+        return false; // Default to false in case of error
+    }
+
+    public boolean isNationalIdUnique(String nationalId) {
+        String SQL = "SELECT COUNT(*) FROM users WHERE national_id = ?";
+        try  { Connection conn = DataBase.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(SQL)  ;
+
+            stmt.setString(1, nationalId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1) == 0;
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error checking national ID uniqueness: " + e.getMessage());
+        }
+        return false;
+    }
+
+
 }

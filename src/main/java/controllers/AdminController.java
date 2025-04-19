@@ -1,9 +1,7 @@
 package controllers;
 
-import entities.Admin;
-import entities.Student;
-import entities.Teacher;
-import entities.User;
+import entities.*;
+import enums.Gender;
 import enums.UserType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,57 +12,137 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import main.HelloApplication;
 import services.AdminService;
-
+import services.ClassesServices;
+import services.UserService;
+import utils.Validators;
 import java.io.IOException;
-import java.net.URL;
-import java.time.LocalDate;
-import java.util.ResourceBundle;
+import java.util.List;
+import utils.UIUtils;
 
 public class AdminController {
    // Add User Fields
      // common users fields
     @FXML
-    private TextField firstName,  lastName , email  , address , phone , nationalId  , specialty , studentClass;
+    private TextField firstName,  lastName , email  , address , phone , nationalId  , specialty ;
     @FXML
     private PasswordField  password ;
     @FXML
     private DatePicker birthdate ;
     @FXML
-    private ComboBox<UserType> userTypeComboBox;
+    private ComboBox<UserType> userTypeComboBox ;
+    @FXML
+    private ComboBox<StudentClass> studentClass ;
+    @FXML
+    private ComboBox<Gender> gender ;
     @FXML
     private Label specialtyLabel , classLabel ;
+    private void resetForm() {
+        // Clear text fields
+        firstName.clear();
+        lastName.clear();
+        email.clear();
+        address.clear();
+        phone.clear();
+        nationalId.clear();
+        specialty.clear();
 
+        // Clear password field (reset style as well)
+        password.clear();
 
-    // util functions
-    private void switchScene(ActionEvent event, String fxmlPath) {
-        try {
-            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource(fxmlPath));
-            Scene scene = new Scene(loader.load());
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
+        // Reset combo boxes
+        userTypeComboBox.setValue(null);
+        gender.setValue(null);
+        studentClass.setValue(null);
+
+        // Reset DatePicker
+        birthdate.setValue(null);
+
+        // Reset styles (remove red border for validation)
+        firstName.setStyle("");
+        lastName.setStyle("");
+        email.setStyle("");
+        address.setStyle("");
+        phone.setStyle("");
+        nationalId.setStyle("");
+        specialty.setStyle("");
+        password.setStyle("");
+        userTypeComboBox.setStyle("");
+        gender.setStyle("");
+        studentClass.setStyle("");
+        birthdate.setStyle("");
+    }
+
+    public boolean addUserFormRequiredFieldsAreEmpty() {
+        boolean hasEmptyField = false;
+        hasEmptyField |= UIUtils.highlightTextFieldIfNull(firstName);
+        hasEmptyField |= UIUtils.highlightTextFieldIfNull(lastName);
+        hasEmptyField |= UIUtils.highlightTextFieldIfNull(email);
+        hasEmptyField |= UIUtils.highlightTextFieldIfNull(password);
+        hasEmptyField |= UIUtils.highlightTextFieldIfNull(nationalId);
+        hasEmptyField |= UIUtils.highlightTextFieldIfNull(address);
+        hasEmptyField |= UIUtils.highlightTextFieldIfNull(phone);
+        hasEmptyField |= UIUtils.highlightDatePickerIfNull(birthdate);
+        hasEmptyField |=  UIUtils.highlightComboBoxIfNull(userTypeComboBox);
+        hasEmptyField |=  UIUtils.highlightComboBoxIfNull(gender);
+        return hasEmptyField  ;
+    }
+    public boolean addUserFormIsValid(){
+        boolean requiredFieldsAreEmplt = addUserFormRequiredFieldsAreEmpty() ;
+        if(requiredFieldsAreEmplt == true ){
+            UIUtils.showErrorAlert("Error", "Please fill in all required fields.");
+            return false ;
         }
-    }
-    private void showErrorAlert(String title, String content) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(content);
-        alert.showAndWait();
-    }
-    private void showSuccessAlert(String title, String content) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(content);
-        alert.showAndWait();
-    }
+        if(!Validators.isEmailValid(email.getText())){
+            email.setStyle("-fx-border-color: red;");
+            UIUtils.showErrorAlert("Error", "Please enter a valid email.");
+            return false ;
+        }
+        if(!Validators.isPasswordStrong(password.getText())){
+            password.setStyle("-fx-border-color: red;");
+            UIUtils.showErrorAlert("Weak Password", "Your password must be at least 8 characters long and include a mix of uppercase letters, lowercase letters, numbers, and special characters.");
+            return false ;
+        }
+        if(!Validators.isValidNationalId(nationalId.getText().replaceAll("\\s+", "") ) ){
+            nationalId.setStyle("-fx-border-color: red;");
+            UIUtils.showErrorAlert("Error", "Please enter a valid national ID.");
+            return false ;
+        }
+
+        UserService  userService = new UserService();
+        if(userService.isEmailUnique(email.getText())==false){
+            email.setStyle("-fx-border-color: red;");
+            UIUtils.showErrorAlert("Email Error", "This email is already in use. Please choose another one.");
+            return false ;
+        }
+
+        if(userService.isNationalIdUnique(nationalId.getText().replaceAll("\\s+", ""))==false){
+            nationalId.setStyle("-fx-border-color: red;");
+            UIUtils.showErrorAlert("Duplicate National ID", "This national ID is already registered. Please enter a unique and valid national ID.");
+            return false ;
+        }
 
 
+        return true ;
+    }
+    /////////////////////////////////////////////////////////////////
     @FXML
     public void initialize() {
+        if(gender !=null){
+            gender.getItems().addAll(Gender.MALE, Gender.FEMALE);
+        }else {
+            System.err.println("gender is null – check your FXML fx:id binding.");
+        }
+
+        if(studentClass !=null){
+            ClassesServices classesServices = new ClassesServices();
+            List<StudentClass> studentClasses = classesServices.getAllClasses();
+            studentClasses.forEach(studentClass1 -> {
+                studentClass.getItems().add(studentClass1);
+            });
+        }
+        else {
+            System.err.println("studentClass is null – check your FXML fx:id binding.");
+        }
         if (userTypeComboBox != null) {
             userTypeComboBox.getItems().addAll(UserType.ADMIN, UserType.STUDENT, UserType.TEACHER);
         } else {
@@ -74,13 +152,17 @@ public class AdminController {
 
     // button Handlers
     public void onAddUserClick(ActionEvent event) {
-        switchScene(event, "/main/admin_views/add-user.fxml");
+        UIUtils.switchScene(event, "/main/admin_views/add-user.fxml");
     }
     public void onHomeClick(ActionEvent event) {
-        switchScene(event, "/main/admin-home-view.fxml");
+        UIUtils.switchScene(event, "/main/admin-home-view.fxml");
+    }
+
+    public void OnUsersClick(ActionEvent event){
+        UIUtils.switchScene(event, "/main/admin_views/users.fxml");
     }
     public void onSubjectsClick(ActionEvent event ){
-        switchScene(event, "/main/admin_views/matiere_view.fxml");
+        UIUtils.switchScene(event, "/main/admin_views/matiere_view.fxml");
     }
     @FXML
     private void onSelectedUserType(ActionEvent event){
@@ -103,36 +185,9 @@ public class AdminController {
         }
 
     }
-
     @FXML
-    public void onSubmitAddUserClick(ActionEvent event){
-
-//        if (firstName.getText().isEmpty()) {
-//            System.out.println("First name is required.");
-//        }
-//        System.out.println("First Name : " + firstName.getText() );
-//        System.out.println("First Name : " + lastName.getText() );
-//
-//        System.out.println("Email : " + email.getText() );
-//        System.out.println("Password : " + password.getText() );
-//        System.out.println("birthdate : " + birthdate.getValue());
-//
-//        System.out.println("adress  : " + address.getText());
-//        System.out.println("phone : " + phone.getText());
-//        System.out.println("nationalId : " + nationalId.getText() );
-//
-//        System.out.println("User Type : " + userTypeComboBox.getValue());
-//        System.out.println("teacher Specialty : " + specialty.getText() );
-//        System.out.println("Student Class : " + specialty.getText() );
-        if (userTypeComboBox.getValue() == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Please select a user type.");
-            alert.showAndWait();
-            return;
-        }
-
+    public void onSubmitAddUserClick(ActionEvent event) {
+        if(addUserFormIsValid() == false){return ;}
         User user = new User(
                 firstName.getText(),
                 lastName.getText(),
@@ -141,31 +196,32 @@ public class AdminController {
                 birthdate.getValue(),
                 address.getText(),
                 phone.getText(),
-                nationalId.getText(),
-                userTypeComboBox.getValue()
+                nationalId.getText().replaceAll("\\s+", ""),
+                userTypeComboBox.getValue() ,
+                gender.getValue()
         );
-        System.out.println(user);
         AdminService adminService = new AdminService();
+        boolean succeess = false ;
         if(user.getType() == UserType.STUDENT){
             Student student = new Student(user) ;
-//            student.setStudentClass(studentClass.getText());
-            adminService.addUser(student);
+            if(studentClass.getValue() != null){
+                student.setStudentClass(studentClass.getValue());
+            }
+            succeess = adminService.addUser(student);
         }else if(user.getType() == UserType.TEACHER){
             Teacher teacher = new Teacher(user) ;
             teacher.setSpecialty(specialty.getText());
-            adminService.addUser(teacher);
+            succeess = adminService.addUser(teacher);
 
         }else if(user.getType() == UserType.ADMIN){
             Admin admin = new Admin(user) ;
-            adminService.addUser(admin);
+            succeess =adminService.addUser(admin);
         }
-
-
-
-        showSuccessAlert("User Added", "The user has been successfully added!") ;
+        if(succeess){
+            UIUtils.showSuccessAlert("User Added", "The user has been successfully added!") ;
+            resetForm();
+        }else {
+            UIUtils.showErrorAlert("Error", "An error occurred while adding the user. ");
+        }
     }
-
-
-
-
 }

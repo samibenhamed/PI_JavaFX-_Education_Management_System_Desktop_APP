@@ -3,6 +3,7 @@ package test;
 import entities.Admin;
 import entities.Student;
 import entities.Teacher;
+import enums.Gender;
 import enums.UserType;
 
 import java.time.LocalDate;
@@ -20,6 +21,7 @@ public class addUser {
                 "1234567890",                // phone
                 "student1nid",                  // nationalId
                 UserType.STUDENT         // enum for student class
+                , Gender.MALE
         );
 
         Teacher teacher  = new Teacher(
@@ -33,6 +35,7 @@ public class addUser {
                 "teacher1nid",                  // nationalId
                 UserType.TEACHER         // enum for student class
                 ,"spetialty"
+                , Gender.MALE
         );
 
 
@@ -46,6 +49,7 @@ public class addUser {
                 "1234567890",                // phone
                 "adminn1nid",                  // nationalId
                 UserType.ADMIN         // enum for student class
+                , Gender.MALE
         ) ;
 
         boolean response = adminService.addUser(admin);
