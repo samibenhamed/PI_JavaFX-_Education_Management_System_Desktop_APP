@@ -1,12 +1,10 @@
 package controllers;
 
 import entities.User;
-import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.Button;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
 import services.AdminService;
 import utils.UIUtils;
 
@@ -49,7 +47,6 @@ public class ShowUsersController {
             service = new AdminService();
             List<User> userList = service.getAllUsers();
 
-            // Set cell value factories
             id.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getId()).asObject());
             firstName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getFirstName()));
             lastName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLastName()));
@@ -61,13 +58,10 @@ public class ShowUsersController {
             nationalId.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNationalId()));
             type.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getType().toString()));
 
-            // Populate the table
             usersTable.getItems().setAll(userList);
 
-            // Optional: Add event for row selection
             usersTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
                 if (newSelection != null) {
-                    // Do something when a user is selected
                     System.out.println("Selected User: " + newSelection.getId());
                 }
             });
@@ -80,7 +74,6 @@ public class ShowUsersController {
     private void handleDeleteUser() {
         User selectedUser = usersTable.getSelectionModel().getSelectedItem();
         if (selectedUser != null) {
-            // Use the utility method to show the confirmation dialog
             boolean confirmed = UIUtils.showConfirmationDialog(
                     "Confirm Deletion",
                     "Are you sure you want to delete this user?",
@@ -102,4 +95,22 @@ public class ShowUsersController {
             System.err.println("No user selected.");
         }
     }
+    @FXML
+    private void handleUpdateUser() {
+        User selectedUser = usersTable.getSelectionModel().getSelectedItem();
+        if (selectedUser != null) {
+            UIUtils.openWindow("/main/user_views/updateUser.fxml", controller -> {
+                UpdateUserController updateController = (UpdateUserController) controller;
+                updateController.initData(selectedUser);
+            });
+
+
+            // Refresh table after update
+            usersTable.getItems().setAll(service.getAllUsers());
+        } else {
+            System.err.println("No user selected for update.");
+        }
+    }
+
+
 }
