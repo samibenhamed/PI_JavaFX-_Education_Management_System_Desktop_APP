@@ -66,7 +66,7 @@ public class UpdateUserController {
             studentClass.setValue(((Student) user).getStudentClass());
         }
 
-        // Populate form fields with user data
+        // fill  form fields with selected  user data
         firstName.setText(user.getFirstName());
         lastName.setText(user.getLastName());
         email.setText(user.getEmail());

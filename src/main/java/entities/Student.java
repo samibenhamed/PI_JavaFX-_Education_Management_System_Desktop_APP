@@ -2,6 +2,8 @@ package entities;
 
 import enums.Gender;
 import enums.UserType;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 
 import java.time.LocalDate;
 
@@ -12,6 +14,16 @@ public class Student extends User {
     }
     public void setStudentClass(StudentClass studentClass) {
         this.studentClass = studentClass;
+    }
+    private BooleanProperty selected = new SimpleBooleanProperty(false);
+    public BooleanProperty selectedProperty() {
+        return selected;
+    }
+    public boolean isSelected() {
+        return selected.get();
+    }
+    public void setSelected(boolean selected) {
+        this.selected.set(selected);
     }
 
     // constructors

@@ -21,6 +21,16 @@ public class StudentClass {
         this.description = description;
     }
 
+    public StudentClass(String name, String type, String level, String field, String speciality, String academicYear, String description) {
+        this.name = name;
+        this.type = type;
+        this.level = level;
+        this.field = field;
+        this.speciality = speciality;
+        this.academicYear = academicYear;
+        this.description = description;
+    }
+
     // Getters (add setters if you need them)
     public int getId() {
         return id;

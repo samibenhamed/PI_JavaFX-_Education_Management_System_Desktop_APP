@@ -11,12 +11,20 @@ import java.util.List;
 
 public class test {
     public static void main(String[] args) {
-        AdminService adminService = new AdminService();
-        List<User> users = adminService.getAllUsers();
-        for (User user : users) {
-            System.out.println(user);
-        }
+        ClassesServices classesServices = new ClassesServices() ;
+        StudentClass testClass = new StudentClass(
+                "Software Engineering",
+                "engineering degree",
+                "3rd Year",
+                "IT",
+                "Web Development",
+                "2024/2025",
+                "Focuses on backend and frontend development"
+        );
 
+//        testClass.showClassDetails();
+        int id = classesServices.addClass(testClass);
+        System.out.println("The New Class ID : "+ id);
 
 
     }

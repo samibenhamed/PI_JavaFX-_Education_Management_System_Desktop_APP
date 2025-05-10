@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ShowClassesController">
+   <children>
+      <TableView fx:id="classesTable" layoutY="50.0" onMouseClicked="#setSelectedClass" prefHeight="200.0" prefWidth="684.0">
+        <columns>
+            <TableColumn fx:id="id" text="id" />
+            <TableColumn fx:id="name" text="name" />
+            <TableColumn fx:id="type" text="type" />
+            <TableColumn fx:id="level" text="level" />
+            <TableColumn fx:id="field" text="field" />
+            <TableColumn fx:id="speciality" text="speciality" />
+            <TableColumn fx:id="academic_year" prefWidth="112.80001831054688" text="academic_year" />
+            <TableColumn fx:id="description" prefWidth="82.4000244140625" text="description" />
+
+        </columns>
+      </TableView>
+      <Button layoutX="541.0" layoutY="250.0" mnemonicParsing="false" onAction="#onUpdateClass" text="Edit" />
+   </children>
+</AnchorPane>
