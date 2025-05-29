@@ -174,4 +174,13 @@ public class UpdateUserController {
 
         return true;
     }
+
+    public  void  setClassInvisible(){
+        classLabel.setVisible(false);
+        studentClass.setVisible(false);
+    }
+    public  void  setSpecialityInvisible(){
+        specialtyLabel.setVisible(false);
+        specialty.setVisible(false);
+    }
 }

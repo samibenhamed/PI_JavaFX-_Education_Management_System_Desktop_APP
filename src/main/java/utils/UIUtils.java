@@ -107,7 +107,7 @@ public class UIUtils {
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Update User");
+//            stage.setTitle("Update User");
             stage.setScene(new Scene(root));
             stage.showAndWait();
         } catch (IOException e) {

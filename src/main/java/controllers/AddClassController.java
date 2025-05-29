@@ -15,6 +15,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,11 +35,26 @@ public class AddClassController {
     @FXML private TableColumn<Student, String> firstNameColumn;
     @FXML private TableColumn<Student, String> lastNameColumn;
     @FXML private TableColumn<StudentClass, String> studentClass;
+
+    @FXML private TableColumn<Student, String> tab1emailColumn;
+
+    @FXML private TableColumn<Student, Date> tab1birthdateColumn;
+    @FXML private TableColumn<Student, String> tab1genderColumn;
+    @FXML private TableColumn<Student, String> tab1phoneColumn;
+    @FXML private TableColumn<Student, String> tab1nattionalIdColumn;
     // Tab2 This Table Shows the adde student to the class
     @FXML private TableView<Student> addedStudentsTable;
     @FXML private TableColumn<Student, String> tab2firstNameColumn;
     @FXML private TableColumn<Student, String> tab2lastNameColumn;
     @FXML private TableColumn<StudentClass, String> tab2studentClass;
+
+    @FXML private TableColumn<Student, String> tab2emailColumn;
+
+    @FXML private TableColumn<Student, Date> tab2birthdateColumn;
+    @FXML private TableColumn<Student, String> tab2genderColumn;
+    @FXML private TableColumn<Student, String> tab2phoneColumn;
+    @FXML private TableColumn<Student, String> tab2nationalIdColumn;
+    @FXML private TableColumn<Student, String> tab2currentClassdColumn;
     private List<Student> currentSelectedStudents = null;
     Set<Student> addedStudents = new HashSet<Student>() ;
 
@@ -91,11 +107,22 @@ public class AddClassController {
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         studentClass.setCellValueFactory(new PropertyValueFactory<>("studentClass"));
+        tab1emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+        tab1birthdateColumn.setCellValueFactory(new PropertyValueFactory<>("birthdate"));
+        tab1genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
+        tab1phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        tab1nattionalIdColumn.setCellValueFactory(new PropertyValueFactory<>("nationalId"));
+
         studentsTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         // tab2
         tab2firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         tab2lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         tab2studentClass.setCellValueFactory(new PropertyValueFactory<>("studentClass"));
+        tab2emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+        tab2birthdateColumn.setCellValueFactory(new PropertyValueFactory<>("birthdate"));
+        tab2genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
+        tab2phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        tab2nationalIdColumn.setCellValueFactory(new PropertyValueFactory<>("nationalId"));
 
 
         loadStudents();

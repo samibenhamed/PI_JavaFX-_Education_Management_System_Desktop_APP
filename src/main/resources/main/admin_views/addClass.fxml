@@ -54,8 +54,14 @@
     <TableView fx:id="studentsTable" onMouseClicked="#onSelectStudent" prefHeight="200" prefWidth="600">
         <columns>
             <TableColumn fx:id="firstNameColumn" text="Name" />
-            <TableColumn fx:id="lastNameColumn" text="Name" />
+            <TableColumn fx:id="lastNameColumn" text="Last Name" />
             <TableColumn fx:id="studentClass" text="currentClass" />
+            <TableColumn fx:id="tab1emailColumn" text="email" />
+            <TableColumn fx:id="tab1birthdateColumn" text="birthdate" />
+            <TableColumn fx:id="tab1genderColumn" text="Gender" />
+            <TableColumn fx:id="tab1phoneColumn" text="phone" />
+            <TableColumn fx:id="tab1nattionalIdColumn" text="National ID" />
+
         </columns>
     </TableView>
    <Button mnemonicParsing="false" onAction="#onAddStudentToClass" prefHeight="26.0" prefWidth="121.0" text="Add Student" />
@@ -63,8 +69,14 @@
     <TableView fx:id="addedStudentsTable"  prefHeight="200" prefWidth="600">
         <columns>
             <TableColumn fx:id="tab2firstNameColumn" text="Name" />
-            <TableColumn fx:id="tab2lastNameColumn" text="Name" />
+            <TableColumn fx:id="tab2lastNameColumn" text="Last Name" />
             <TableColumn fx:id="tab2studentClass" text="currentClass" />
+            <TableColumn fx:id="tab2emailColumn" text="Email" />
+            <TableColumn fx:id="tab2birthdateColumn" text="Birthdate" />
+            <TableColumn fx:id="tab2genderColumn" text="Gender" />
+            <TableColumn fx:id="tab2phoneColumn" text="Phone" />
+            <TableColumn fx:id="tab2nationalIdColumn" text="National ID" />
+            <TableColumn fx:id="tab2currentClassdColumn" text="Current Class" />
         </columns>
     </TableView>
     <Button alignment="CENTER" onAction="#handleAddClass" prefWidth="120" text="Add Class" />

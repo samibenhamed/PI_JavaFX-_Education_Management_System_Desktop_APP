@@ -157,7 +157,6 @@ public class ClassesServices {
         return students;
     }
 
-
     public boolean updateStudentClass(StudentClass studentClass) {
         String query = "UPDATE classes SET name = ?, type = ?, level = ?, field = ?, speciality = ?, academic_year = ?, description = ? WHERE id = ?";
 
@@ -199,6 +198,38 @@ public class ClassesServices {
 
         return false; // return false in case of error
     }
+
+    public boolean deleteClass(int id) {
+        String deleteClassQuery = "DELETE FROM classes WHERE id = ?";
+        String updateUsersQuery = "UPDATE users SET class_id = NULL WHERE type = 'STUDENT' AND class_id = ?";
+        try {
+            PreparedStatement deleteStmt = connection.prepareStatement(deleteClassQuery);
+            PreparedStatement updateStmt = connection.prepareStatement(updateUsersQuery);
+                connection.setAutoCommit(false);
+
+                deleteStmt.setInt(1, id);
+                int deleteRows = deleteStmt.executeUpdate();
+
+                updateStmt.setInt(1, id);
+                int updateRows = updateStmt.executeUpdate();
+
+                connection.commit(); // Commit both
+
+                return deleteRows > 0;
+        }  catch (SQLException e) {
+            System.err.println("Transaction error: " + e.getMessage());
+            return false;
+        }finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                System.err.println("Error resetting auto-commit: " + e.getMessage());
+            }
+        }
+        }
+
+
+
 
 
 

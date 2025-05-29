@@ -151,13 +151,10 @@ public class AdminController {
     }
 
     // button Handlers
-    public void onAddUserClick(ActionEvent event) {
-        UIUtils.switchScene(event, "/main/admin_views/add-user.fxml");
+    public void onClasses(ActionEvent event) {
+        UIUtils.switchScene(event, "/main/admin_views/showClasses.fxml");
     }
-    public void onHomeClick(ActionEvent event) {
-        UIUtils.switchScene(event, "/main/admin-home-view.fxml");
-    }
-
+//
     public void OnUsersClick(ActionEvent event){
         UIUtils.switchScene(event, "/main/admin_views/users.fxml");
     }
