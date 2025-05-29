@@ -22,6 +22,7 @@ public class LoginController {
     PasswordField password ;
     @FXML
     Label errorLabel ;
+    public static User currentUser = null ;
 
     @FXML
     protected void onLogInClick(ActionEvent event ) {
@@ -29,7 +30,6 @@ public class LoginController {
         System.out.println(password);
         UserService userService = new UserService() ;
         User user = userService.authenticate(email.getText() , password.getText() ) ;
-//        User user = userService.authenticate( "teacher1@example.com" , "teacher1");
 
         if(user == null){
             errorLabel.setText("Invalid email or password.");
@@ -37,8 +37,7 @@ public class LoginController {
         }
         else {
             errorLabel.setVisible(false);
-            System.out.println(user.getType());
-
+            currentUser = user ;
             try {
                 FXMLLoader loader = null;
                 if(user.getType() == UserType.ADMIN ) {

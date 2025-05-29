@@ -16,6 +16,7 @@ public class User {
     protected String phone;
     protected String nationalId;
     protected UserType type;
+    protected Gender gender;
     // getters and setters
 
     public int getId() {
@@ -98,20 +99,16 @@ public class User {
         this.type = type;
     }
 
-    // constructors
-    public User(int id, String firstName, String lastName, String email, String password, LocalDate birthdate, String address, String phone, String nationalId, UserType type) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.birthdate = birthdate;
-        this.address = address;
-        this.phone = phone;
-        this.nationalId = nationalId;
-        this.type = type;
+    public Gender getGender() {
+        return gender;
     }
-    public User( String firstName, String lastName, String email, String password, LocalDate birthdate, String address, String phone, String nationalId, UserType type) {
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    // constructors
+    public User(int id, String firstName, String lastName, String email, String password, LocalDate birthdate, String address, String phone, String nationalId, UserType type , Gender gender) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -122,6 +119,23 @@ public class User {
         this.phone = phone;
         this.nationalId = nationalId;
         this.type = type;
+        this.gender = gender;
+    }
+    public User( String firstName, String lastName, String email, String password, LocalDate birthdate, String address, String phone, String nationalId, UserType type , Gender  gender) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.birthdate = birthdate;
+        this.address = address;
+        this.phone = phone;
+        this.nationalId = nationalId;
+        this.type = type;
+        this.gender = gender;
+    }
+
+    public User(){
+
     }
 
 
