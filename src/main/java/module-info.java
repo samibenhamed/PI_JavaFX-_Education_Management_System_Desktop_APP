@@ -2,6 +2,9 @@ module main.educationmanagementsystem {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
+    requires java.mail;
+    requires org.json;
+    requires com.github.librepdf.openpdf;
 
 
     opens main to javafx.fxml;
