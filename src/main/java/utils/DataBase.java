@@ -2,7 +2,7 @@ package utils;
 import java.sql.Connection;
 
 public class DataBase {
-    public static final String URL = "jdbc:mysql://localhost:3306/education_management_system";
+    public static final String URL = "jdbc:mysql://localhost:3306/ddl";
     public static final String USER = "root";
     public static final String PASSWORD = "root";
     private Connection connection;
