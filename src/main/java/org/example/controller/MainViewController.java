@@ -1,4 +1,4 @@
-package org.example.controller;
+/*package org.example.controller;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -35,6 +35,21 @@ public class MainViewController {
         // Charger les enseignants depuis la base (ou autre source)
         enseignants = FXCollections.observableArrayList(dao.getAll());
         tableEnseignants.setItems(enseignants);
+
+
+
+
+        // Remplir les champs quand on sélectionne une ligne
+        tableEnseignants.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                nomField.setText(newSelection.getNom());
+                prenomField.setText(newSelection.getPrenom());
+                emailField.setText(newSelection.getEmail());
+                departementField.setText(newSelection.getDepartement());
+            }
+        });
+
+
     }
 
     @FXML
@@ -82,4 +97,78 @@ public class MainViewController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+
+    @FXML
+    public void modifierEnseignant() {
+        Enseignant selected = tableEnseignants.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showAlert("Veuillez sélectionner un enseignant à modifier.");
+            return;
+        }
+
+        String nom = nomField.getText();
+        String prenom = prenomField.getText();
+        String email = emailField.getText();
+        String departement = departementField.getText();
+
+        if (nom.isEmpty() || prenom.isEmpty() || email.isEmpty() || departement.isEmpty()) {
+            showAlert("Tous les champs sont requis pour la modification.");
+            return;
+        }
+
+        // Update the selected enseignant
+        selected.setNom(nom);
+        selected.setPrenom(prenom);
+        selected.setEmail(email);
+        selected.setDepartement(departement);
+
+        // Update in database
+        dao.update(selected); // You need to implement this method in your DAO
+
+        // Refresh table
+        tableEnseignants.refresh();
+
+        showAlert("L'enseignant a été modifié avec succès.");
+        clearFields();
+    }
+}
+*/
+package org.example.controller;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import org.example.Model.Enseignant;
+
+import java.io.IOException;
+
+public class MainViewController {
+    @FXML private TabPane mainTabPane;
+    @FXML private Tab enseignantsTab;
+    @FXML private Tab sallesTab;
+    @FXML private Tab seancesTab;
+    @FXML private TextField nomField;
+    @FXML private TextField prenomField;
+    @FXML private TextField emailField;
+    @FXML private TextField departementField;
+    @FXML private TableView<Enseignant> tableEnseignants;
+     private ObservableList<Enseignant> enseignants = FXCollections.observableArrayList();
+    @FXML
+    private AnchorPane seanceInclude;
+    @FXML
+    public void initialize() {
+        // Optional: Add logic if needed when switching tabs
+
+    }
+
+
 }

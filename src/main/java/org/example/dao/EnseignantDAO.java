@@ -10,7 +10,7 @@ import java.util.List;
 public class EnseignantDAO {
 
     // 🔁 Lire tous les enseignants
-    public List<Enseignant> getAll() {
+    public static List<Enseignant> getAll() {
         List<Enseignant> enseignants = new ArrayList<>();
         String sql = "SELECT * FROM enseignant";
 
@@ -39,6 +39,7 @@ public class EnseignantDAO {
     public void add(Enseignant e) {
         String sql = "INSERT INTO enseignant (nom, prenom, email, departement) VALUES (?, ?, ?, ?)";
 
+        System.out.println("Inserting enseignant: " + e.getNom());
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -62,15 +63,23 @@ public class EnseignantDAO {
 
             stmt.setString(1, e.getNom());
             stmt.setString(2, e.getPrenom());
-            stmt.setString(3, e.getEmail());
-            stmt.setString(4, e.getDepartement());
+            stmt.setString(3, e.getEmail() != null ? e.getEmail() : "");
+            stmt.setString(4, e.getDepartement() != null ? e.getDepartement() : "");
             stmt.setInt(5, e.getId());
-            stmt.executeUpdate();
+
+            int rows = stmt.executeUpdate();
+            if (rows > 0) {
+                System.out.println("Modifié !");
+            } else {
+                System.out.println("Aucune ligne modifiée.");
+            }
 
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
+
+
 
     // ❌ Supprimer un enseignant
     public void delete(int id) {
@@ -86,4 +95,8 @@ public class EnseignantDAO {
             ex.printStackTrace();
         }
     }
+
+
+
+
 }

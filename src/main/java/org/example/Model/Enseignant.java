@@ -15,6 +15,16 @@ public class Enseignant {
         this.departement = departement;
     }
 
+
+
+
+    public Enseignant(String nom, String prenom, String email, String departement) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.departement = departement;
+    }
+
     // Getters & Setters
     public int getId() {
         return id;
@@ -55,5 +65,7 @@ public class Enseignant {
     public void setDepartement(String departement) {
         this.departement = departement;
     }
+
+
 }
 
