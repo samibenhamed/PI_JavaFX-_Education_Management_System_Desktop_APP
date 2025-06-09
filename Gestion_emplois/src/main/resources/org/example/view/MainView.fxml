@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.controller.MainViewController">
+    <center>
+        <TabPane fx:id="mainTabPane">
+
+            <Tab fx:id="enseignantsTab" text="Enseignants">
+                <AnchorPane>
+                    <fx:include source="GestionEnseignants.fxml"/>
+                </AnchorPane>
+            </Tab>
+
+            <Tab fx:id="sallesTab" text="Salles">
+                <AnchorPane>
+                    <fx:include source="salle_view.fxml"/>
+                </AnchorPane>
+            </Tab>
+
+            <Tab fx:id="seancesTab" text="Séances">
+                <AnchorPane>
+                    <fx:include fx:id="seanceView" source="seance_view.fxml"/>
+                </AnchorPane>
+            </Tab>
+
+            <Tab fx:id="modulesTab" text="Modules">
+                <AnchorPane>
+                    <fx:include fx:id="moduleView" source="model_view.fxml"/>
+                </AnchorPane>
+            </Tab>
+        </TabPane>
+    </center>
+</BorderPane>

@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+
+.page-title {
+    -fx-font-family: 'Playfair Display', serif;
+    -fx-font-size: 32px;
+    -fx-text-fill: linear-gradient(to right, #00c6ff, #0072ff);
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 4, 0.2, 2, 2);
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+}
+
+
+.input-field {
+    -fx-pref-width: 120px;
+}
+
+.button-ajouter {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+}
+
+.button-modifier {
+    -fx-background-color: #2196F3;
+    -fx-text-fill: white;
+}
+
+.button-supprimer {
+    -fx-background-color: #f44336;
+    -fx-text-fill: white;
+}
+
+.custom-table {
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+    -fx-background-color: white;
+}
