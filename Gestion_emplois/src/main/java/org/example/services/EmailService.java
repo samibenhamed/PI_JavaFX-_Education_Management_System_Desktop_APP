@@ -62,7 +62,7 @@ public class EmailService {
         List<Seance> seances = new ArrayList<>();
 
         String query = "SELECT id,  date, heure_debut, heure_fin, salle_id, module, enseignant FROM seance";
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlserver://LAPTOP-JBT79SP8\\MSSQLSERVER01;databaseName=Schedule_Managment;TrustServerCertificate=true;integratedSecurity=true;\n")) {
+        try (Connection conn = DriverManager.getConnection("jdbc:sqlserver://localhost:50217;databaseName=Schedule_Managment;integratedSecurity=true;encrypt=false;\n")) {
             PreparedStatement stmt = conn.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
 
