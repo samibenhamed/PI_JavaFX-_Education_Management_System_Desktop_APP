@@ -52,7 +52,15 @@ import javafx.stage.FileChooser;
 import javafx.scene.control.TableView;
 import org.example.services.EmailService;
 
+
+
+
+
 public class SeanceController implements Initializable {
+    @FXML
+    private TableView<Seance> tableSeances;
+
+
 
     @FXML
     private TextField emailField;
@@ -77,8 +85,7 @@ public class SeanceController implements Initializable {
     @FXML
     private TextField enseignantField;
 
-    @FXML
-    private TableView<Seance> tableSeances;
+
 
     @FXML
     private TableColumn<Seance, String> jourCol;
@@ -537,6 +544,9 @@ public class SeanceController implements Initializable {
     }
 
 
+    public TableView<Seance> getSeanceTable() {
+        return tableSeances;
+    }
 
 
 

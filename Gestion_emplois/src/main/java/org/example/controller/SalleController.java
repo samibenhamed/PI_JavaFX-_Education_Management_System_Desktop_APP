@@ -26,34 +26,7 @@ public class SalleController {
 
     private ObservableList<Salle> salles;
     private final SalleDao dao = new SalleDao();
-/*
-    @FXML
-    public void initialize() {
-        nomCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNom()));
-        capaciteCol.setCellValueFactory(cellData ->
-                new SimpleStringProperty(String.valueOf(cellData.getValue().getCapacite())));
-        salles = FXCollections.observableArrayList(dao.getAll());
-        tableSalles.setItems(salles);
 
-        tableSalles.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
-            if (newSel != null) {
-                nomField.setText(newSel.getNom());
-                capaciteField.setText(String.valueOf(newSel.getCapacite()));
-            }
-        });
-
-        tableSalles.setRowFactory(tv -> {
-            TableRow<Salle> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (row.isEmpty()) {
-                    tableSalles.getSelectionModel().clearSelection(); // ensure selection is cleared
-                    clearFormFields(); // clear form
-                }
-            });
-            return row;
-        });
-    }
-*/
 @FXML
 public void initialize() {
     nomCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNom()));
@@ -84,21 +57,7 @@ public void initialize() {
     // 💡 Ajout du bouton "Disponible" pour chaque ligne
     disponibleCol.setCellFactory(column -> new TableCell<Salle, Boolean>() {
         private final Button statusButton = new Button();
-/*
-        {
-            /
-            button.setOnAction(e -> {
-                Salle salle = getTableView().getItems().get(getIndex());
-                salle.setDisponible(!salle.isDisponible()); // Toggle disponibilité
-                updateButtonText(salle);
-                getTableView().refresh(); // Rafraîchir l'affichage
-            });
-        }
 
-        private void updateButtonText(Salle salle) {
-            button.setText(salle.isDisponible() ? "Oui" : "Non");
-        }
-*/
         @Override
         protected void updateItem(Boolean disponible, boolean empty) {
             super.updateItem(disponible, empty);

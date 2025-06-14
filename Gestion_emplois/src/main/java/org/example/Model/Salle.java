@@ -5,7 +5,7 @@ public class Salle {
     private int id;
     private String nom;
     private int capacite;
-    private boolean disponible;  // ✅ NEW FIELD
+    private boolean disponible;
 
     public Salle(int id, String nom, int capacite) {
         this.id = id;

@@ -13,6 +13,11 @@
             <id>central</id>
             <url>https://repo.maven.apache.org/maven2</url>
         </repository>
+        <repository>
+            <id>dlsc-repo</id>
+            <url>https://nexus.dlsc.com/nexus/repository/releases/</url>
+        </repository>
+
     </repositories>
 
 
@@ -24,8 +29,16 @@
     </properties>
 
     <dependencies>
-
         <dependency>
+        <groupId>org.jfxtras</groupId>
+        <artifactId>jfxtras-controls</artifactId>
+        <version>17-r1</version>
+    </dependency>
+        <dependency>
+            <groupId>org.jfxtras</groupId>
+            <artifactId>jfxtras-agenda</artifactId>
+            <version>17-r1</version>
+        </dependency>        <dependency>
             <groupId>com.sun.mail</groupId>
             <artifactId>jakarta.mail</artifactId>
             <version>1.6.7</version>

@@ -3,9 +3,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import jfxtras.scene.control.agenda.Agenda?>
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.controller.MainViewController">
+
     <center>
+
         <TabPane fx:id="mainTabPane">
+
 
             <Tab fx:id="enseignantsTab" text="Enseignants">
                 <AnchorPane>
@@ -19,17 +23,33 @@
                 </AnchorPane>
             </Tab>
 
-            <Tab fx:id="seancesTab" text="Séances">
-                <AnchorPane>
-                    <fx:include fx:id="seanceView" source="seance_view.fxml"/>
-                </AnchorPane>
-            </Tab>
-
             <Tab fx:id="modulesTab" text="Modules">
                 <AnchorPane>
                     <fx:include fx:id="moduleView" source="model_view.fxml"/>
                 </AnchorPane>
             </Tab>
+            <Tab fx:id="seancesTab" text="Séances">
+                <AnchorPane fx:id="seanceContainer"/>
+            </Tab>
+
+
+
+
+            <Tab fx:id="agendaTab" text="Agenda">
+                <AnchorPane fx:id="agendaPane">
+                    <children>
+                        <VBox spacing="10" AnchorPane.topAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.bottomAnchor="10.0">
+                            <HBox alignment="TOP_LEFT">
+                                <Button fx:id="chargerAgendaBtn"
+                                        text="🔄 Charger l’agenda"
+                                        onAction="#handleChargerAgenda" />
+                            </HBox>
+                            <Agenda fx:id="agenda" VBox.vgrow="ALWAYS" />
+                        </VBox>
+                    </children>
+                </AnchorPane>
+            </Tab>
+
         </TabPane>
     </center>
 </BorderPane>
