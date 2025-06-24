@@ -35,6 +35,8 @@
                         <TableColumn fx:id="salleCol" text="ID Salle" prefWidth="100"/>
                         <TableColumn fx:id="moduleCol" text="Module" prefWidth="100"/>
                         <TableColumn fx:id="enseignantCol" text="Enseignant" prefWidth="100"/>
+                        <TableColumn fx:id="EmailCol" text="Email enseignant" prefWidth="100"/>
+
                     </columns>
                 </TableView>
 
@@ -56,27 +58,37 @@
                         <TextField fx:id="salleIdField" promptText="ID Salle" styleClass="input-field" GridPane.columnIndex="3"/>
                         <TextField fx:id="moduleField" promptText="Module" styleClass="input-field" GridPane.columnIndex="4"/>
                         <TextField fx:id="enseignantField" promptText="Enseignant" styleClass="input-field" GridPane.columnIndex="5"/>
+                        <TextField fx:id="EmailField" promptText="Email" styleClass="input-field" GridPane.columnIndex="5"/>
 
                     </children>
                 </GridPane>
 
                 <!-- Buttons -->
-                <HBox spacing="12" alignment="CENTER">
-                    <Button text="Ajouter" fx:id="addButton" onAction="#addSeance" styleClass="button-ajouter"/>
-                    <Button text="Modifier" fx:id="updateButton" onAction="#updateSeance" styleClass="button-modifier"/>
-                    <Button text="Supprimer" fx:id="deleteButton" onAction="#deleteSeance" styleClass="button-supprimer"/>
-                    <Button text="Exporter PDF" onAction="#handleExportPDF" />
-                    <TextField fx:id="emailField" layoutX="50.0" layoutY="150.0" promptText="Entrer email" />
-                    <Button fx:id="sendEmailButton"
-                            layoutX="50.0"
-                            layoutY="200.0"
-                            mnemonicParsing="false"
-                            text="Envoyer Emploi par Email"
-                           onAction="#handleSendEmail"/>
+                <VBox spacing="20" alignment="CENTER">
 
+                    <!-- Ligne 1 -->
+                    <HBox spacing="12" alignment="CENTER">
+                        <Button text="Ajouter" fx:id="addButton" onAction="#addSeance" styleClass="button-ajouter"/>
+                        <Button text="Modifier" fx:id="updateButton" onAction="#updateSeance" styleClass="button-modifier"/>
+                        <Button text="Supprimer" fx:id="deleteButton" onAction="#deleteSeance" styleClass="button-supprimer"/>
+                        <Button text="Exporter PDF" onAction="#handleExportPDF"/>
+                    </HBox>
 
+                    <!-- Ligne 2 -->
+                    <HBox spacing="12" alignment="CENTER">
+                        <TextField fx:id="emailField" promptText="Entrer email"/>
+                        <Button fx:id="sendEmailButton"
+                                text="Envoyer Emploi par Email"
+                                onAction="#handleSendEmail"/>
+                        <Button fx:id="sendAIButton"
+                                text="Envoyer emploi du temps à tous"
+                                onAction="#sendAIEmailsToAll"
+                                prefWidth="250"
+                                style="-fx-background-color: #1976D2; -fx-text-fill: white;" />
+                    </HBox>
 
-                </HBox>
+                </VBox>
+
             </VBox>
         </children>
     </AnchorPane>

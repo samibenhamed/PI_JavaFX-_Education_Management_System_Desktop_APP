@@ -2,7 +2,12 @@ package org.example.controller;
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.awt.event.ActionEvent;
-import java.util.Properties;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.*;
+
 import com.itextpdf.text.Document;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
@@ -26,10 +31,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 
-import java.util.Optional;
-
 import java.io.FileOutputStream;
-import java.util.List;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -38,6 +41,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.stage.Stage;
+import org.example.dao.EnseignantDAO;
 import org.example.dao.SeanceDAO;
 import org.example.Model.Seance;
 import javafx.scene.control.Button;
@@ -45,15 +49,13 @@ import javafx.scene.control.Label;
 
 import java.net.URL;
 import java.time.LocalDate;
-
-import java.util.ResourceBundle;
+import java.util.List;
 
 import javafx.stage.FileChooser;
 import javafx.scene.control.TableView;
 import org.example.services.EmailService;
-
-
-
+import org.example.services.GeminiClient;
+import org.example.utils.DatabaseConnection;
 
 
 public class SeanceController implements Initializable {
@@ -61,7 +63,8 @@ public class SeanceController implements Initializable {
     private TableView<Seance> tableSeances;
 
 
-
+    @FXML
+    private TextField EmailField;
     @FXML
     private TextField emailField;
 
@@ -95,6 +98,10 @@ public class SeanceController implements Initializable {
 
     @FXML
     private TableColumn<Seance, String> heureFinCol;
+
+    @FXML
+    private TableColumn<Seance, String> EmailCol;
+
 
     @FXML
     private TableColumn<Seance, Integer> salleCol;
@@ -144,6 +151,7 @@ public class SeanceController implements Initializable {
             int salleId = Integer.parseInt(salleIdField.getText());
             String module = moduleField.getText();
             String enseignant = enseignantField.getText();
+            String email = EmailField.getText();
 
             if (date == null || heureDebut.isEmpty() || heureFin.isEmpty()) {
                 showAlert("Champs manquants", "Veuillez remplir tous les champs.", AlertType.WARNING);
@@ -151,7 +159,7 @@ public class SeanceController implements Initializable {
             }
 
             // 👇 Use 0 or omit if ID is auto-incremented
-            Seance seance = new Seance(0, date, heureDebut, heureFin, salleId, module, enseignant);
+            Seance seance = new Seance(0, date, heureDebut, heureFin, salleId, module, enseignant, email);
             seanceDAO.add(seance);
             seanceList.add(seance);
 
@@ -184,7 +192,9 @@ public class SeanceController implements Initializable {
                     heureFinField.getText().isEmpty() ||
                     salleIdField.getText().isEmpty() ||
                     moduleField.getText().isEmpty() ||
-                    enseignantField.getText().isEmpty()) {
+                    enseignantField.getText().isEmpty() ||
+                    EmailField.getText().isEmpty())
+            {
 
                 showAlert("Tous les champs doivent être remplis.");
                 return;
@@ -196,8 +206,9 @@ public class SeanceController implements Initializable {
             int salleId = Integer.parseInt(salleIdField.getText());
             String module = moduleField.getText();
             String enseignant = enseignantField.getText();
+            String email = EmailField.getText();
 
-            Seance seance = new Seance(selectedSeance.getId(), date, heureDebut, heureFin, salleId, module, enseignant);
+            Seance seance = new Seance(selectedSeance.getId(), date, heureDebut, heureFin, salleId, module, enseignant, email);
             seanceDAO.update(seance);
             loadSeances();
 
@@ -264,6 +275,7 @@ public class SeanceController implements Initializable {
         salleCol.setCellValueFactory(new PropertyValueFactory<>("salleId"));
         moduleCol.setCellValueFactory(new PropertyValueFactory<>("module"));
         enseignantCol.setCellValueFactory(new PropertyValueFactory<>("enseignant"));
+        EmailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
 
         tableSeances.setItems(seanceList);
 
@@ -280,6 +292,7 @@ public class SeanceController implements Initializable {
                 salleIdField.setText(String.valueOf(selectedSeance.getSalleId()));
                 moduleField.setText(selectedSeance.getModule());
                 enseignantField.setText(selectedSeance.getEnseignant());
+                EmailField.setText(selectedSeance.getEmail());
             }
         });
 
@@ -305,6 +318,7 @@ public class SeanceController implements Initializable {
         salleIdField.clear();
         moduleField.clear();
         enseignantField.clear();
+        EmailField.clear();
         selectedSeance = null;
     }
 
@@ -323,51 +337,6 @@ public class SeanceController implements Initializable {
     }
 
 
-    @FXML
-    private void onModifierClicked() {
-        selectedSeance = tableSeances.getSelectionModel().getSelectedItem();
-        if (selectedSeance != null) {
-            jourField.setText(selectedSeance.getDate());
-            heureDebutField.setText(selectedSeance.getHeureDebut());
-            heureFinField.setText(selectedSeance.getHeureFin());
-            salleIdField.setText(String.valueOf(selectedSeance.getSalleId()));
-        }
-    }
-
-    @FXML
-    private void onSauvegarderClicked() {
-        if (selectedSeance != null) {
-            selectedSeance.setDate(jourField.getText());
-            selectedSeance.setHeureDebut(heureDebutField.getText());
-            selectedSeance.setHeureFin(heureFinField.getText());
-
-            // Validate salleId
-            String salleText = salleIdField.getText();
-            if (salleText == null || salleText.trim().isEmpty()) {
-                showAlert("L'ID de salle est requis !");
-                return;
-            }
-
-            try {
-                selectedSeance.setSalleId(Integer.parseInt(salleText.trim()));
-            } catch (NumberFormatException e) {
-                showAlert("ID de salle invalide. Veuillez entrer un nombre.");
-                return;
-            }
-
-            // Update in DB
-            seanceDAO.update(selectedSeance);
-            loadSeances(); // refresh table
-
-            showConfirmation("Séance modifiée avec succès !");
-            clearFields();
-        } else {
-            showAlert("Aucune séance sélectionnée.");
-        }
-    }
-
-
-
 
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -377,22 +346,44 @@ public class SeanceController implements Initializable {
         alert.showAndWait();
     }
 
-    private void showConfirmation(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Confirmation");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+
+    @FXML
+    private void envoyerEmailsPersonnalises() {
+        List<Seance> toutesSeances = seanceDAO.getAll();  // Utilise ton DAO
+
+        // Groupement par enseignant
+        Map<String, List<Seance>> seancesParEnseignant = new HashMap<>();
+
+        for (Seance seance : toutesSeances) {
+            String nom = seance.getEnseignant();
+            if (nom == null || nom.isEmpty()) continue;
+
+            seancesParEnseignant.computeIfAbsent(nom, k -> new ArrayList<>()).add(seance);
+        }
+
+        // Envoi des emails pour chaque enseignant
+        for (Map.Entry<String, List<Seance>> entry : seancesParEnseignant.entrySet()) {
+            String nomEnseignant = entry.getKey();
+            List<Seance> seances = entry.getValue();
+
+            // On suppose que chaque enseignant a la même adresse email dans ses séances
+            String email = seances.get(0).getEmail();
+
+            if (email == null || email.trim().isEmpty()) {
+                System.out.println("Aucune adresse email pour l’enseignant : " + nomEnseignant);
+                continue;
+            }
+
+            String contenu = GeminiClient.generateEmailText(nomEnseignant, seances);
+            EmailService.sendEmploiTo( contenu);
+        }
+
+        showToast("Les emails ont été envoyés avec succès !");
     }
 
-    private void clearFields() {
-        jourField.clear();
-        heureDebutField.clear();
-        heureFinField.clear();
-        salleIdField.clear();
 
-        selectedSeance = null;
-    }
+
+
     public void exportSeancesToPdf(List<Seance> seanceList) {
         Document document = new Document();
 
@@ -414,7 +405,7 @@ public class SeanceController implements Initializable {
             document.add(title);
 
             // Adjust the number of columns
-            PdfPTable pdfTable = new PdfPTable(5);
+            PdfPTable pdfTable = new PdfPTable(6);
             pdfTable.setWidthPercentage(100);
             pdfTable.setSpacingBefore(10);
 
@@ -424,6 +415,8 @@ public class SeanceController implements Initializable {
             pdfTable.addCell("Module");
             pdfTable.addCell("Enseignant");
             pdfTable.addCell("Salle");
+            pdfTable.addCell("Email");
+
 
             // Rows
             for (Seance seance : seanceList) {
@@ -531,6 +524,8 @@ public class SeanceController implements Initializable {
         }
     }
 
+
+
     @FXML
     private void handleSendEmail(javafx.event.ActionEvent event) {
         String email = emailField.getText();
@@ -548,6 +543,46 @@ public class SeanceController implements Initializable {
         return tableSeances;
     }
 
+
+
+
+    private String extractNameFromEmail(String email) {
+        // Supprime le domaine
+        String base = email.split("@")[0];
+
+        // Remplace les points/underscores par des espaces
+        base = base.replace(".", " ").replace("_", " ");
+
+        // Met en majuscule la première lettre de chaque mot
+        String[] parts = base.split(" ");
+        StringBuilder result = new StringBuilder();
+        for (String part : parts) {
+            if (!part.isEmpty()) {
+                result.append(Character.toUpperCase(part.charAt(0)))
+                        .append(part.substring(1))
+                        .append(" ");
+            }
+        }
+        return result.toString().trim();
+    }
+
+    @FXML
+    private void sendAIEmailsToAll() {
+        List<String> allEmails = seanceDAO.getAllDistinctEmails();
+
+        for (String email : allEmails) {
+            List<Seance> seances = seanceDAO.getSeancesByEmail(email);
+            if (seances.isEmpty()) continue;
+
+            String enseignantNom = seances.get(0).getEnseignant(); // car tous les seances de ce mail ont le même enseignant
+            String contenuIA = GeminiClient.generateEmailText(enseignantNom, seances);
+
+            EmailService.sendEmail(email, "Votre emploi du temps IA", contenuIA);
+            System.out.println("Email IA envoyé à " + email);
+        }
+
+        showAlert("Tous les emplois du temps ont été envoyés avec succès.");
+    }
 
 
 }

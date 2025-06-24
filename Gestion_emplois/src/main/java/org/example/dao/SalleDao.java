@@ -11,7 +11,7 @@ import java.util.List;
 public class SalleDao {
 
     public List<Salle> getAll() {
-        List<Salle> salles = new ArrayList<>();
+        List<Salle> list = new ArrayList<>();
         String sql = "SELECT * FROM salle";
 
         try (Connection conn = DatabaseConnection.getConnection();
@@ -19,18 +19,20 @@ public class SalleDao {
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
-                salles.add(new Salle(
+                Salle salle = new Salle(
                         rs.getInt("id"),
                         rs.getString("nom"),
-                        rs.getInt("capacite")
-                ));
+                        rs.getInt("capacite"),
+                        rs.getBoolean("disponible")  // 👈 C’est ici qu'on récupère l'état !
+                );
+                list.add(salle);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return salles;
+        return list;
     }
 
 public void add(Salle salle) {
@@ -46,6 +48,7 @@ public void add(Salle salle) {
 
         stmt.setString(1, salle.getNom());
         stmt.setInt(2, salle.getCapacite());
+        stmt.setBoolean(3, salle.isDisponible());
         System.out.println("Ajout salle - nom: " + salle.getNom() + ", capacité: " + salle.getCapacite());
 
         stmt.executeUpdate();
@@ -71,6 +74,7 @@ public void add(Salle salle) {
             stmt.setString(1, s.getNom());
             stmt.setInt(2, s.getCapacite());
             stmt.setInt(3, s.getId());
+            stmt.setBoolean(4, s.isDisponible());
             stmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -87,6 +91,19 @@ public void add(Salle salle) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void updateDisponibilite(int salleId, boolean disponible) {
+        String sql = "UPDATE salle SET disponible = ? WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setBoolean(1, disponible);
+            stmt.setInt(2, salleId);
+            stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }

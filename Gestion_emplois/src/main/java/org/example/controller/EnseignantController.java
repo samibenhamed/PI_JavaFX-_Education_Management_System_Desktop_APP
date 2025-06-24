@@ -88,7 +88,10 @@ public class EnseignantController implements Initializable {
     private void loadEnseignantsFromDB() {
         enseignants.clear();
         try (Connection conn = DriverManager.getConnection(
-                "jdbc:sqlserver://localhost:50217;databaseName=Schedule_Managment;integratedSecurity=true;encrypt=false;\n"
+                "jdbc:mysql://localhost:3306/schedule_management?useSSL=false&serverTimezone=UTC",
+                "root", // Username
+                ""
+
         )) {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT id, nom, prenom, email, departement FROM enseignant");
@@ -117,7 +120,9 @@ public class EnseignantController implements Initializable {
 
         if (!nom.isEmpty() && !prenom.isEmpty() && !email.isEmpty() && !departement.isEmpty()) {
             try (Connection conn = DriverManager.getConnection(
-                    "jdbc:sqlserver://localhost:50217;databaseName=Schedule_Managment;integratedSecurity=true;encrypt=false;\n")) {
+                    "jdbc:mysql://localhost:3306/schedule_management?useSSL=false&serverTimezone=UTC",
+                    "root", // Username
+                    "")) {
 
                 String sql = "INSERT INTO enseignant (nom, prenom, email, departement) VALUES (?, ?, ?, ?)";
                 PreparedStatement stmt = conn.prepareStatement(sql);
@@ -155,7 +160,9 @@ public class EnseignantController implements Initializable {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 try (Connection conn = DriverManager.getConnection(
-                        "jdbc:sqlserver://localhost:50217;databaseName=Schedule_Managment;integratedSecurity=true;encrypt=false;\n")) {
+                        "jdbc:mysql://localhost:3306/schedule_management?useSSL=false&serverTimezone=UTC",
+                        "root", // Username
+                        "")) {
 
                     String sql = "DELETE FROM enseignant WHERE id = ?";
                     PreparedStatement stmt = conn.prepareStatement(sql);

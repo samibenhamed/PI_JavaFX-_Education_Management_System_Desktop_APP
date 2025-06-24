@@ -7,14 +7,14 @@ public class Salle {
     private int capacite;
     private boolean disponible;
 
-    public Salle(int id, String nom, int capacite) {
+    public Salle(int id, String nom, int capacite, boolean disponible) {
         this.id = id;
         this.nom = nom;
         this.capacite = capacite;
         this.disponible = true; // default to available
     }
 
-    public Salle(String nom, int capacite) {
+    public Salle(String nom, int capacite, boolean disponible) {
         this.nom = nom;
         this.capacite = capacite;
         this.disponible = true; // default to available

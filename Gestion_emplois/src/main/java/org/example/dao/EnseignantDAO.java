@@ -96,7 +96,24 @@ public class EnseignantDAO {
         }
     }
 
+    public static List<String> getAllEmails() {
+        List<String> emails = new ArrayList<>();
+        String query = "SELECT email FROM enseignant";
 
+        try (Connection conn = DatabaseConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                emails.add(rs.getString("email"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return emails;
+    }
 
 
 }

@@ -5,11 +5,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
-    private static final String URL = "jdbc:sqlserver://localhost:50217;databaseName=Schedule_Managment;integratedSecurity=true;encrypt=false;\n";
-    //private static final String USER = "postgres";
-    //private static final String PASSWORD = "abc";
+    private static final String URL = "jdbc:mysql://localhost:3306/schedule_management?useSSL=false&serverTimezone=UTC";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "";
 
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL);
-    }
+        return DriverManager.getConnection(URL, USERNAME, PASSWORD);    }
 }

@@ -8,20 +8,22 @@ public class Seance {
     private String heureFin;
     private int salleId;
     private String module;
+    private String email;
 
     public Seance() {
     }
 
-    public Seance(String date, String heureDebut, String heureFin, int salleId, String module, String enseignant) {
+    public Seance(String date, String heureDebut, String heureFin, int salleId, String module, String enseignant, String email) {
         this.date = date;
         this.heureDebut = heureDebut;
         this.heureFin = heureFin;
         this.salleId = salleId;
         this.module = module;
         this.enseignant = enseignant;
+        this.email = email;
     }
 
-    public Seance(int id, String date, String heureDebut, String heureFin, int salleId, String module, String enseignant) {
+    public Seance(int id, String date, String heureDebut, String heureFin, int salleId, String module, String enseignant, String email) {
         this.id = id;
         this.date = date;
         this.heureDebut = heureDebut;
@@ -29,6 +31,8 @@ public class Seance {
         this.salleId = salleId;
         this.module = module;
         this.enseignant = enseignant;
+        this.email = email;
+
     }
 
     public int getId() {
@@ -83,7 +87,11 @@ return module;
     public String getEnseignant() {
         return enseignant;
     }
+
 public void setEnseignant(String enseignant) {
     this.enseignant = enseignant;
 }
+
+public String getEmail() {  return email; }
+    public void setEmail(String email) { this.email = email; }
 }
