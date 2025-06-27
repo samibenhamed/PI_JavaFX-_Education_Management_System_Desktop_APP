@@ -225,7 +225,6 @@ public class SeanceController implements Initializable {
     }
 
 
-    // Method to handle deleting a Seance
     @FXML
     public void deleteSeance () {
 
@@ -241,7 +240,6 @@ public class SeanceController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText("Êtes-vous sûr de vouloir supprimer cette séance ?");
 
-        // Wait for user response
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
@@ -279,10 +277,8 @@ public class SeanceController implements Initializable {
 
         tableSeances.setItems(seanceList);
 
-        // Charger les données initiales
         loadSeances();
 
-        // Row selection listener
         tableSeances.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 selectedSeance = newSelection;
@@ -296,7 +292,6 @@ public class SeanceController implements Initializable {
             }
         });
 
-        // Handle clicks on empty space in the table
         tableSeances.setRowFactory(tv -> {
             TableRow<Seance> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -361,12 +356,10 @@ public class SeanceController implements Initializable {
             seancesParEnseignant.computeIfAbsent(nom, k -> new ArrayList<>()).add(seance);
         }
 
-        // Envoi des emails pour chaque enseignant
         for (Map.Entry<String, List<Seance>> entry : seancesParEnseignant.entrySet()) {
             String nomEnseignant = entry.getKey();
             List<Seance> seances = entry.getValue();
 
-            // On suppose que chaque enseignant a la même adresse email dans ses séances
             String email = seances.get(0).getEmail();
 
             if (email == null || email.trim().isEmpty()) {
@@ -398,18 +391,18 @@ public class SeanceController implements Initializable {
 
             PdfWriter.getInstance(document, new FileOutputStream(file));
             document.open();
+
             com.itextpdf.text.Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18);
             Paragraph title = new Paragraph("Emploi du Temps", titleFont);
             title.setAlignment(Element.ALIGN_CENTER);
             title.setSpacingAfter(20);
             document.add(title);
 
-            // Adjust the number of columns
-            PdfPTable pdfTable = new PdfPTable(6);
+            PdfPTable pdfTable = new PdfPTable(6); // 6 colonnes
             pdfTable.setWidthPercentage(100);
             pdfTable.setSpacingBefore(10);
 
-            // Header
+            // En-têtes
             pdfTable.addCell("Jour");
             pdfTable.addCell("Heure");
             pdfTable.addCell("Module");
@@ -417,18 +410,14 @@ public class SeanceController implements Initializable {
             pdfTable.addCell("Salle");
             pdfTable.addCell("Email");
 
-
-            // Rows
+            // Contenu
             for (Seance seance : seanceList) {
                 pdfTable.addCell(seance.getDate());
                 pdfTable.addCell(seance.getHeureDebut() + " - " + seance.getHeureFin());
-                pdfTable.addCell(seance.getModule() != null ? seance.getModule().toString() : ""); // Or getLibelle() if available
-                if (seance.getEnseignant() != null) {
-                    pdfTable.addCell(seance.getEnseignant()) ;
-                } else {
-                    pdfTable.addCell("");
-                }
-                pdfTable.addCell(String.valueOf(seance.getSalleId())); // or use seance.getSalle().getNom() if salle is object
+                pdfTable.addCell(seance.getModule() != null ? seance.getModule().toString() : "");
+                pdfTable.addCell(seance.getEnseignant() != null ? seance.getEnseignant() : "");
+                pdfTable.addCell(seance.getSalleId() != 0 ? String.valueOf(seance.getSalleId()) : "");
+                pdfTable.addCell(seance.getEmail() != null ? seance.getEmail() : ""); // AJOUT DE CETTE LIGNE
             }
 
             document.add(pdfTable);
@@ -439,6 +428,7 @@ public class SeanceController implements Initializable {
             e.printStackTrace();
         }
     }
+
 
     @FXML
     private void handleExportPDF() {

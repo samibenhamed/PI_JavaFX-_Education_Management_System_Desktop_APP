@@ -11,13 +11,14 @@ public class Salle {
         this.id = id;
         this.nom = nom;
         this.capacite = capacite;
-        this.disponible = true; // default to available
+        this.disponible = disponible;
     }
 
     public Salle(String nom, int capacite, boolean disponible) {
         this.nom = nom;
         this.capacite = capacite;
-        this.disponible = true; // default to available
+        this.disponible = disponible;
+
     }
 
     public Salle(int id, String text, String text1) {

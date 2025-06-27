@@ -36,7 +36,7 @@ public class SalleDao {
     }
 
 public void add(Salle salle) {
-    String sql = "INSERT INTO salle (nom, capacite) VALUES (?, ?)";
+    String sql = "INSERT INTO salle (nom, capacite, disponible) VALUES (?, ?, ?)";
 
     try (Connection conn = DatabaseConnection.getConnection();
          PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
