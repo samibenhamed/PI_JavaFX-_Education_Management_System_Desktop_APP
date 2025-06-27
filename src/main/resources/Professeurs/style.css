@@ -1,0 +1,125 @@
+/* General background color for the scene */
+.root {
+    -fx-background-color: #fff7e0; /* Light cream */
+}
+
+/* Apply a consistent font across the entire app */
+.label, .button, .table-view {
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+/* Style for labels */
+.label {
+    -fx-text-fill: #3d0b0b; /* Dark brown text */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* Style for buttons */
+.button {
+    -fx-background-color: #d39918;  /* Golden yellow */
+    -fx-text-fill: #3d0b0b; /* Dark brown text */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-cursor: hand;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-color: #3d0b0b;
+    -fx-border-width: 1.5px;
+    -fx-effect: dropshadow(gaussian, rgba(61,11,11,0.3), 2, 0, 0, 1);
+}
+
+.button:hover {
+    -fx-background-color: #3d0b0b;  /* Dark brown */
+    -fx-text-fill: #fff7e0;          /* Cream */
+    -fx-border-color: #d39918;
+}
+
+/* Style for the TableView */
+.table-view {
+    -fx-background-color: #fff7e0;  /* Light cream */
+    -fx-border-color: #3d0b0b;      /* Dark brown border */
+    -fx-border-width: 1.5px;
+}
+
+/* Table headers */
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(to bottom, #3d0b0b, #d39918);
+    -fx-border-color: #3d0b0b;
+    -fx-border-width: 0 0 1.5px 0;
+}
+
+.table-view .column-header-text {
+    -fx-text-fill: #fff7e0; /* Cream */
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+}
+
+/* Row colors */
+.table-view .table-row-cell {
+    -fx-background-color: #fff7e0;
+    -fx-text-fill: #3d0b0b;
+}
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: #d39918; /* Golden yellow hover */
+    -fx-text-fill: #3d0b0b;
+}
+
+/* Styling the VBox container */
+.vbox {
+    -fx-spacing: 20px;
+    -fx-padding: 20px;
+}
+
+/* Styling the HBox container */
+.hbox {
+    -fx-background-color: linear-gradient(to right, #3d0b0b, #d39918);
+    -fx-alignment: center;
+    -fx-padding: 10px;
+}
+
+/* Custom styling for the header */
+.label-header {
+    -fx-text-fill: #fff7e0; /* Cream */
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+/* Error styling */
+.error {
+    -fx-border-color: red;
+    -fx-border-width: 2px;
+    -fx-border-radius: 4px;
+}
+
+/* Sidebar 3D effect */
+.sidebar-3d {
+    -fx-background-color: linear-gradient(to bottom right, #d39918, #3d0b0b);
+    -fx-padding: 20px;
+    -fx-border-radius: 15px;
+    -fx-background-radius: 15px;
+
+    /* 3D effect: inner shadows + drop shadow */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 8, 0, 4, 4),
+    innershadow(three-pass-box, rgba(0,0,0,0.3), 6, 0.7, 0, 2);
+}
+
+/* Override your existing .button in sidebar to fit the theme */
+.sidebar-3d .button {
+    -fx-background-color: #3d0b0b;
+    -fx-text-fill: #fff7e0;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-padding: 10 20 10 20;
+    -fx-border-color: #d39918;
+    -fx-border-width: 1.5px;
+}
+
+.sidebar-3d .button:hover {
+    -fx-background-color: #d39918;
+    -fx-text-fill: #3d0b0b;
+    -fx-border-color: #3d0b0b;
+}
