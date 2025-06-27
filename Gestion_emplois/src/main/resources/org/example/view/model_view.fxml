@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.controller.ModuleController"
+            stylesheets="@seance.css"
+            style="-fx-background-color: linear-gradient(to bottom right, #ffecd2, #fcb69f);">
+    <children>
+        <VBox spacing="20" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10">
+            <padding>
+                <Insets top="25" right="30" bottom="25" left="30"/>
+            </padding>
+
+            <!-- Title -->
+            <Label text="Gestion des Modules" styleClass="page-title"/>
+
+            <!-- Table -->
+            <TableView fx:id="tableModule" prefHeight="250" styleClass="custom-table">
+                <columns>
+                    <TableColumn fx:id="colNom" text="Nom" prefWidth="300"/>
+                    <TableColumn fx:id="volumeHoraireCol" text="Volume Horaire" prefWidth="250"/>
+                </columns>
+            </TableView>
+
+            <!-- Input Fields -->
+            <HBox spacing="15">
+                <TextField fx:id="tfNom" promptText="Nom du Module" styleClass="input-field"/>
+                <TextField fx:id="tfVolumeHoraire" promptText="Volume Horaire" styleClass="input-field"/>
+            </HBox>
+
+            <!-- Buttons -->
+            <HBox spacing="15" alignment="CENTER_LEFT">
+                <Button text="Ajouter" fx:id="addButton" onAction="#addModule" styleClass="button-ajouter"/>
+                <Button text="Modifier" fx:id="updateButton" onAction="#modifierModule" styleClass="button-modifier"/>
+                <Button text="Supprimer" fx:id="deleteButton" onAction="#deleteModule" styleClass="button-supprimer"/>
+            </HBox>
+        </VBox>
+    </children>
+</AnchorPane>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane fx:id="rootStack" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="org.example.controller.SeanceController"
+           stylesheets="@seance.css" prefWidth="800" prefHeight="600">
+
+    <!-- Main content area -->
+    <AnchorPane style="-fx-background-color: #e0f0ff;">
+        <children>
+            <VBox spacing="20" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10">
+                <padding>
+                    <Insets top="20" right="30" bottom="30" left="30"/>
+                </padding>
+
+                <!-- Title -->
+                <Label text="Gestion des Séances" styleClass="page-title">
+                    <font>
+                        <Font size="24" />
+                    </font>
+                </Label>
+
+                <!-- Table -->
+                <TableView fx:id="tableSeances" prefHeight="250" styleClass="custom-table">
+                    <columns>
+                        <TableColumn fx:id="jourCol" text="Jour" prefWidth="100"/>
+                        <TableColumn fx:id="heureDebutCol" text="Heure Début" prefWidth="100"/>
+                        <TableColumn fx:id="heureFinCol" text="Heure Fin" prefWidth="100"/>
+                        <TableColumn fx:id="salleCol" text="ID Salle" prefWidth="100"/>
+                        <TableColumn fx:id="moduleCol" text="Module" prefWidth="100"/>
+                        <TableColumn fx:id="enseignantCol" text="Enseignant" prefWidth="100"/>
+                        <TableColumn fx:id="EmailCol" text="Email enseignant" prefWidth="100"/>
+
+                    </columns>
+                </TableView>
+
+                <!-- Input Fields -->
+                <GridPane hgap="10" vgap="10">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="16.66"/>
+                        <ColumnConstraints percentWidth="16.66"/>
+                        <ColumnConstraints percentWidth="16.66"/>
+                        <ColumnConstraints percentWidth="16.66"/>
+                        <ColumnConstraints percentWidth="16.66"/>
+                        <ColumnConstraints percentWidth="16.66"/>
+                    </columnConstraints>
+
+                    <children>
+                        <DatePicker fx:id="dateField" promptText="Date" GridPane.columnIndex="0" />
+                        <TextField fx:id="heureDebutField" promptText="Heure Début (HH:mm)" styleClass="input-field" GridPane.columnIndex="1"/>
+                        <TextField fx:id="heureFinField" promptText="Heure Fin (HH:mm)" styleClass="input-field" GridPane.columnIndex="2"/>
+                        <TextField fx:id="salleIdField" promptText="ID Salle" styleClass="input-field" GridPane.columnIndex="3"/>
+                        <TextField fx:id="moduleField" promptText="Module" styleClass="input-field" GridPane.columnIndex="4"/>
+                        <TextField fx:id="enseignantField" promptText="Enseignant" styleClass="input-field" GridPane.columnIndex="5"/>
+                        <TextField fx:id="EmailField" promptText="Email" styleClass="input-field" GridPane.columnIndex="5"/>
+
+                    </children>
+                </GridPane>
+
+                <!-- Buttons -->
+                <VBox spacing="20" alignment="CENTER">
+
+                    <!-- Ligne 1 -->
+                    <HBox spacing="12" alignment="CENTER">
+                        <Button text="Ajouter" fx:id="addButton" onAction="#addSeance" styleClass="button-ajouter"/>
+                        <Button text="Modifier" fx:id="updateButton" onAction="#updateSeance" styleClass="button-modifier"/>
+                        <Button text="Supprimer" fx:id="deleteButton" onAction="#deleteSeance" styleClass="button-supprimer"/>
+                        <Button text="Exporter PDF" onAction="#handleExportPDF"/>
+                    </HBox>
+
+                    <!-- Ligne 2 -->
+                    <HBox spacing="12" alignment="CENTER">
+                        <TextField fx:id="emailField" promptText="Entrer email"/>
+                        <Button fx:id="sendEmailButton"
+                                text="Envoyer Emploi par Email"
+                                onAction="#handleSendEmail"/>
+                        <Button fx:id="sendAIButton"
+                                text="Envoyer emploi du temps à tous"
+                                onAction="#sendAIEmailsToAll"
+                                prefWidth="250"
+                                style="-fx-background-color: #1976D2; -fx-text-fill: white;" />
+                    </HBox>
+
+                </VBox>
+
+            </VBox>
+        </children>
+    </AnchorPane>
+</StackPane>

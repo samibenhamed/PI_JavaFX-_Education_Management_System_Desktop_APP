@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.util.Callback?>
+
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.util.Callback?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.controller.SalleController"
+            stylesheets="@salle.css"
+            style="-fx-background-color: linear-gradient(to bottom right, #74ebd5, #ACB6E5);">
+    <children>
+        <VBox spacing="20" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.bottomAnchor="10">
+            <padding>
+                <Insets top="25" right="30" bottom="25" left="30"/>
+            </padding>
+
+            <!-- Title -->
+            <Label text="Gestion des Salles" styleClass="page-title"/>
+
+            <TableView fx:id="tableSalles" prefHeight="300" styleClass="custom-table">
+                <columns>
+                    <TableColumn fx:id="nomCol" text="Nom" prefWidth="300"/>
+                    <TableColumn fx:id="capaciteCol" text="Capacité" prefWidth="300"/>
+                    <TableColumn fx:id="disponibleCol" text="Disponibilité">
+                        <!-- ... -->
+                    </TableColumn>
+
+                </columns>
+            </TableView>
+
+
+            <!-- Input Fields -->
+            <HBox spacing="12">
+                <TextField fx:id="nomField" promptText="Nom" styleClass="input-field"/>
+                <TextField fx:id="capaciteField" promptText="Capacité" styleClass="input-field"/>
+            </HBox>
+
+            <!-- Buttons -->
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <Button text="Ajouter" onAction="#ajouterSalle" styleClass="button-ajouter"/>
+                <Button text="Modifier" onAction="#modifierSalle" styleClass="button-modifier"/>
+                <Button text="Supprimer" onAction="#supprimerSalle" styleClass="button-supprimer"/>
+            </HBox>
+        </VBox>
+    </children>
+</AnchorPane>

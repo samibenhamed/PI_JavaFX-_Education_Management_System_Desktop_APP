@@ -1,0 +1,47 @@
+.group0 {
+    -fx-background-color: #E57373; /* rouge pâle */
+    -fx-border-color: #B71C1C;
+    -fx-text-fill: white;
+}
+
+.group1 {
+    -fx-background-color: #64B5F6; /* bleu clair */
+    -fx-border-color: #0D47A1;
+    -fx-text-fill: white;
+}
+
+
+.group2 {
+    -fx-background-color: #81C784; /* vert doux */
+    -fx-border-color: #1B5E20;
+    -fx-text-fill: black;
+}
+.agenda .HourMinuteHeader {
+    -fx-font-size: 10px;
+}
+
+.agenda .HourEntry {
+    -fx-pref-height: 60px; /* Contrôle la hauteur d'une heure */
+}
+
+/* Cache les heures en dehors de 8h–18h (ex: 0h–7h et 19h–23h) */
+.agenda .Hour00,
+.agenda .Hour01,
+.agenda .Hour02,
+.agenda .Hour03,
+.agenda .Hour04,
+.agenda .Hour05,
+.agenda .Hour06,
+.agenda .Hour07,
+.agenda .Hour19,
+.agenda .Hour20,
+.agenda .Hour21,
+.agenda .Hour22,
+.agenda .Hour23 {
+    -fx-pref-height: 0;
+    -fx-min-height: 0;
+    -fx-max-height: 0;
+    -fx-padding: 0;
+    -fx-border-width: 0;
+}
+
