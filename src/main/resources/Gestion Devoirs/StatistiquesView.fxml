@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.GestionDevoirsControllers.StatistiquesController">
+
+    <center>
+        <VBox spacing="20" alignment="CENTER">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <Label text="Statistique : Nombre d'étudiants par Devoir" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+            <BarChart fx:id="barChartEtudiantsParDevoir" title="Étudiants par Devoir" prefWidth="600" prefHeight="300">
+                <xAxis>
+                    <CategoryAxis label="Devoir"/>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis label="Nombre d'étudiants" tickUnit="1" minorTickCount="0" forceZeroInRange="true" />
+                </yAxis>
+            </BarChart>
+
+            <Label text="Classement des meilleurs scores" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+            <TableView fx:id="tableClassement" prefHeight="300" prefWidth="600">
+                <columns>
+                    <TableColumn fx:id="colEleveId" text="Élève ID" prefWidth="150"/>
+                    <TableColumn fx:id="colDevoirId" text="Devoir ID" prefWidth="150"/>
+                    <TableColumn fx:id="colScore" text="Score" prefWidth="150"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+
+</BorderPane>

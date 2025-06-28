@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controllers.GestionDevoirsControllers.SoumissionController">
+
+    <center>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <!-- ✅ Table des soumissions -->
+            <TableView fx:id="tableSoumissions" prefHeight="200" styleClass="table-view">
+                <columns>
+                    <TableColumn fx:id="devoirIdCol" text="Devoir ID" prefWidth="80"/>
+                    <TableColumn fx:id="eleveIdCol" text="Élève ID" prefWidth="80"/>
+                    <TableColumn fx:id="dateSoumissionCol" text="Date de soumission" prefWidth="150"/>
+                    <TableColumn fx:id="contenuCol" text="Contenu" prefWidth="200"/>
+                    <TableColumn fx:id="cheminFichierCol" text="Chemin du fichier" prefWidth="200"/>
+                    <TableColumn fx:id="scoreCol" text="Score" prefWidth="80"/> <!-- ✅ Colonne Score -->
+                </columns>
+            </TableView>
+
+            <!-- ✅ Formulaire de saisie -->
+            <GridPane hgap="10" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints halignment="RIGHT"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                    <ColumnConstraints hgrow="NEVER"/>
+                </columnConstraints>
+
+                <rowConstraints>
+                    <RowConstraints valignment="CENTER"/>
+                    <RowConstraints valignment="CENTER"/>
+                    <RowConstraints valignment="CENTER"/>
+                    <RowConstraints valignment="CENTER"/>
+                    <RowConstraints valignment="CENTER"/> <!-- ✅ Ligne Score -->
+                </rowConstraints>
+
+                <Label text="Devoir :" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="devoirComboBox" prefWidth="300" onAction="#filtrerParDevoir"
+                          GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.columnSpan="2" styleClass="text-field"/>
+
+                <Label text="Contenu :" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextArea fx:id="contenuField" prefRowCount="3" prefColumnCount="20" wrapText="true"
+                          GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.columnSpan="2" styleClass="text-area"/>
+
+                <Label text="Chemin du fichier :" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="cheminFichierField" GridPane.rowIndex="2" GridPane.columnIndex="1" styleClass="text-field"/>
+                <Button text="Upload PDF" onAction="#handleUploadPDF" GridPane.rowIndex="2" GridPane.columnIndex="2" styleClass="button-upload"/>
+
+                <Label text="Date de soumission :" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <DatePicker fx:id="dateSoumissionPicker" GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.columnSpan="2" styleClass="date-picker"/>
+
+                <!-- ✅ Champ pour score -->
+                <Label text="Score :" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextField fx:id="scoreField" GridPane.rowIndex="4" GridPane.columnIndex="1" GridPane.columnSpan="2" styleClass="text-field"/>
+            </GridPane>
+
+            <!-- ✅ Boutons -->
+            <HBox spacing="10" alignment="CENTER_RIGHT" styleClass="button-submit-container">
+                <Button fx:id="boutonAjouter" text="Ajouter" onAction="#ajouterSoumission" styleClass="button-submit"/>
+                <Button fx:id="boutonModifier" text="Modifier" onAction="#modifierSoumission" styleClass="button-edit"/>
+                <Button fx:id="boutonSupprimer" text="Supprimer" onAction="#supprimerSoumission" styleClass="button-delete"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<VBox spacing="10" styleClass="card"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controllers.GestionDevoirsControllers.DevoirController"
+      stylesheets="@/Gestion Devoirs/styles/style.css">
+
+    <!-- Titre -->
+    <Label text="Ajouter un Devoir" styleClass="title-label"/>
+
+    <!-- Champ Titre -->
+    <Label text="Titre:"/>
+    <TextField fx:id="titreField" styleClass="text-field" prefWidth="300"/>
+
+    <!-- Champ Description -->
+    <Label text="Description:"/>
+    <TextArea fx:id="descriptionField" styleClass="text-area" prefWidth="300" prefRowCount="4"/>
+
+    <!-- Champ Date limite -->
+    <Label text="Date limite:"/>
+    <DatePicker fx:id="dateLimitePicker" styleClass="date-picker"/>
+
+    <!-- Zone de message d'erreur avec Ikonli -->
+    <HBox fx:id="errorBox" spacing="10" alignment="CENTER_LEFT" visible="false" managed="false">
+        <FontIcon iconLiteral="fas-exclamation-triangle" iconSize="18" styleClass="font-icon"/>
+        <Label fx:id="erreurLabel" text=""/>
+    </HBox>
+
+    <!-- Boutons -->
+    <HBox spacing="10" styleClass="button-submit-container">
+        <Button fx:id="boutonAjouter" text="Ajouter" onAction="#ajouterDevoir" styleClass="button-submit"/>
+        <Button fx:id="boutonModifier" text="Modifier" onAction="#modifierDevoir" styleClass="button-edit" disable="true"/>
+        <Button fx:id="boutonSupprimer" text="Supprimer" onAction="#supprimerDevoir" styleClass="button-delete" disable="true"/>
+    </HBox>
+
+    <!-- TableView pour afficher les devoirs -->
+    <TableView fx:id="tableDevoirs" prefHeight="200" styleClass="table-view">
+        <columns>
+            <TableColumn fx:id="titreCol" text="Titre" prefWidth="150">
+                <cellValueFactory>
+                    <PropertyValueFactory property="titre"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="descriptionCol" text="Description" prefWidth="200">
+                <cellValueFactory>
+                    <PropertyValueFactory property="description"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="dateLimiteCol" text="Date Limite" prefWidth="150">
+                <cellValueFactory>
+                    <PropertyValueFactory property="dateLimite"/>
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
+
+</VBox>
